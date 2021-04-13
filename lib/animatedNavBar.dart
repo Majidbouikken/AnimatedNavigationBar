@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'AnimatedNavBarPage.dart';
 
 class AnimatedNavBar extends StatefulWidget {
   final List<AnimatedNavBarPage> pages;
@@ -226,4 +225,14 @@ class Background extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
+}
+
+// page
+class AnimatedNavBarPage {
+  final String title;
+  final Widget pageContent;
+  final IconData icon;
+  final IconData inactiveIcon;
+
+  const AnimatedNavBarPage({Key key, this.title, this.pageContent, this.icon, this.inactiveIcon});
 }

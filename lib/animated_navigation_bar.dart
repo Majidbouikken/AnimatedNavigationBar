@@ -1,6 +1,5 @@
 library animated_navigation_bar;
 
-export 'animatedNavBarPage.dart';
 export 'animatedNavBar.dart';
 /// A Calculator.
 class Calculator {

@@ -1,8 +1,8 @@
 name: animated_navigation_bar
 description: A stylish and customizable bottom navigation bar with animations
-version: 0.0.1
-author:
-homepage:
+version: 0.0.1+1
+author: Abdelmadjid Bouikken Bahi Amar <bouikkenmajid@gmail.com>
+homepage: https://github.com/Majidbouikken/AnimatedNavigationBar
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
