@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 
 class AnimatedNavBar extends StatefulWidget {
+  ///
+  /// The [pages] [color] and [borderRadius] parameters must not be null.
   final List<AnimatedNavBarPage> pages;
   final double padding;
   final Color color;
-  final Color backgroundColor;
+
+  ///
+  /// The [defaultPage] default value is 0.
+  ///
+  /// The [iconColor] shows how the the selected tab icon's color should appear.
+  ///
+  /// The [inactiveIconColor] shows how the the unselected tab icon's color should appear.
+  ///
+  /// The [borderRadius] arguments indicates how the radius around the corners of the [CustomPainter].
+  ///
+  /// [shadow] Whether there's elevation or not.
+  ///
+  /// Provides the AnimatedNavBar with a [TextStyle] to stylize the tab bar titles.
+  ///
+  /// If the [textStyle] argument is null, the AnimatedNavBar will use the style from the
+  /// closest enclosing [DefaultTextStyle].
+  final int defaultPage;
   final Color iconColor;
   final Color inactiveIconColor;
   final Radius borderRadius;
@@ -16,7 +34,7 @@ class AnimatedNavBar extends StatefulWidget {
       this.pages,
       this.padding = 8,
       this.color,
-      this.backgroundColor,
+      this.defaultPage = 0,
       this.iconColor,
       this.inactiveIconColor,
       this.borderRadius,
@@ -37,10 +55,16 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
 
   @override
   void initState() {
+    ///
+    /// the limit for a [Bottom navigation] destinations is 5 according
+    /// to the material.io design guidelines
+    /// for more on bottom navigation bars head over to https://material.io/components/bottom-navigation#usage
+    ///
+    /// if you want to implement more than 5 destinations than a navigation drawer would suffice.
     if (!(this.widget.pages.length > 0 && this.widget.pages.length < 6))
       throw ("Total count of tabs must not exceed 5 or recede 1");
     size = widget.pages.length;
-    selected = 0;
+    selected = this.widget.defaultPage;
     Color color = this.widget.color;
     tabButtonHeight = 48;
     shadowColor = Color.fromARGB(120, (color.red * 0.2).toInt(),
@@ -158,16 +182,19 @@ class Background extends CustomPainter {
 
     var path = Path();
 
-    // starting point (right side)
+    /// starting point (right side)
     path.moveTo(size.width, radius);
-    // top right corner
+
+    /// top right corner
     path.quadraticBezierTo(size.width, 0, size.width - radius, 0);
-    // top line
+
+    /// top line
     path.lineTo(radius, 0);
-    // top left corner
+
+    /// top left corner
     path.quadraticBezierTo(0, 0, 0, radius);
 
-    // bottom left corner
+    /// bottom left corner
     if (selected == 0)
       path.lineTo(0, size.height - tabButtonHeight);
     else {
@@ -175,9 +202,10 @@ class Background extends CustomPainter {
       path.quadraticBezierTo(0, size.height - tabButtonHeight, radius,
           size.height - tabButtonHeight);
     }
-    // tab buttons
+
+    /// tab buttons
     for (int i = 0; i < tabSize; i++) {
-      // if painter is before selected item
+      /// if painter is before selected item
       if (i == selected - 1) {
         path.lineTo(flexSize * (i + 1) - radius, size.height - tabButtonHeight);
         path.quadraticBezierTo(
@@ -186,7 +214,8 @@ class Background extends CustomPainter {
             flexSize * (i + 1),
             size.height - tabButtonHeight + radius);
       }
-      // if painter is on selected item
+
+      /// if painter is on selected item
       if (i == selected) {
         path.lineTo(flexSize * i, size.height - radius);
         path.quadraticBezierTo(
@@ -195,7 +224,8 @@ class Background extends CustomPainter {
         path.quadraticBezierTo(flexSize * i + activeTabWidth, size.height,
             flexSize * i + activeTabWidth, size.height - radius);
       }
-      // if painter is after selected item
+
+      /// if painter is after selected item
       if (i == selected + 1) {
         path.lineTo(flexSize * (i - 1) + activeTabWidth,
             size.height - tabButtonHeight + radius);
@@ -206,7 +236,8 @@ class Background extends CustomPainter {
             size.height - tabButtonHeight);
       }
     }
-    // bottom right corner
+
+    /// bottom right corner
     if (selected == tabSize - 1)
       path.lineTo(size.width, radius);
     else {
@@ -216,7 +247,7 @@ class Background extends CustomPainter {
       path.lineTo(size.width, radius);
     }
 
-    // drawing the canvas
+    /// drawing the canvas
     if (this.shadow) canvas.drawShadow(path, this.shadowColor, 4.0, true);
     canvas.drawPath(path, paint);
   }
@@ -227,8 +258,12 @@ class Background extends CustomPainter {
   }
 }
 
-// page
+/// This class's main purpose is to provide an [AnimatedNavPage] with pages.
 class AnimatedNavBarPage {
+  ///
+  /// The [title] [pageContent] and [icon] parameters must not be null.
+  ///
+  /// The [inactiveIcon] property's replaced by the [icon] argument when null.
   final String title;
   final Widget pageContent;
   final IconData icon;
