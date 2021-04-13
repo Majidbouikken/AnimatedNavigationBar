@@ -13,15 +13,15 @@ class AnimatedNavBar extends StatefulWidget {
 
   const AnimatedNavBar(
       {Key key,
-        this.pages,
-        this.padding = 8,
-        this.color,
-        this.backgroundColor,
-        this.iconColor,
-        this.inactiveIconColor,
-        this.borderRadius,
-        this.shadow = true,
-        this.textStyle})
+      this.pages,
+      this.padding = 8,
+      this.color,
+      this.backgroundColor,
+      this.iconColor,
+      this.inactiveIconColor,
+      this.borderRadius,
+      this.shadow = true,
+      this.textStyle})
       : super(key: key);
 
   @override
@@ -92,36 +92,36 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                                 alignment: Alignment.center,
                                 child: (selected == i)
                                     ? Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      this.widget.pages[i].icon,
-                                      color: this.widget.iconColor,
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      this.widget.pages[i].title,
-                                      style: this.widget.textStyle,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    )
-                                  ],
-                                )
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            this.widget.pages[i].icon,
+                                            color: this.widget.iconColor,
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            this.widget.pages[i].title,
+                                            style: this.widget.textStyle,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        ],
+                                      )
                                     : Icon(
-                                  (this.widget.pages[i].inactiveIcon !=
-                                      null)
-                                      ? this.widget.pages[i].inactiveIcon
-                                      : this.widget.pages[i].icon,
-                                  color: (this.widget.inactiveIconColor !=
-                                      null)
-                                      ? this.widget.inactiveIconColor
-                                      : this.widget.iconColor,
-                                ),
+                                        (this.widget.pages[i].inactiveIcon !=
+                                                null)
+                                            ? this.widget.pages[i].inactiveIcon
+                                            : this.widget.pages[i].icon,
+                                        color: (this.widget.inactiveIconColor !=
+                                                null)
+                                            ? this.widget.inactiveIconColor
+                                            : this.widget.iconColor,
+                                      ),
                               ),
                             ),
                           )));
@@ -234,5 +234,6 @@ class AnimatedNavBarPage {
   final IconData icon;
   final IconData inactiveIcon;
 
-  const AnimatedNavBarPage({Key key, this.title, this.pageContent, this.icon, this.inactiveIcon});
+  const AnimatedNavBarPage(
+      {Key key, this.title, this.pageContent, this.icon, this.inactiveIcon});
 }
