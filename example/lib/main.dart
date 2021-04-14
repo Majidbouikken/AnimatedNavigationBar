@@ -41,7 +41,10 @@ class MyHomePage extends StatelessWidget {
             pageContent: Container(
               color: Colors.blue[100],
               alignment: Alignment.center,
-              child: Text("Home", style: TextStyle(fontSize: 24),),
+              child: Text(
+                "Home",
+                style: TextStyle(fontSize: 24),
+              ),
             ),
           ),
           // second page
@@ -52,7 +55,10 @@ class MyHomePage extends StatelessWidget {
             pageContent: Container(
               color: Colors.red[100],
               alignment: Alignment.center,
-              child: Text("Map", style: TextStyle(fontSize: 24),),
+              child: Text(
+                "Map",
+                style: TextStyle(fontSize: 24),
+              ),
             ),
           ),
           // third page
@@ -63,7 +69,10 @@ class MyHomePage extends StatelessWidget {
             pageContent: Container(
               color: Colors.green[100],
               alignment: Alignment.center,
-              child: Text("User", style: TextStyle(fontSize: 24),),
+              child: Text(
+                "User",
+                style: TextStyle(fontSize: 24),
+              ),
             ),
           ),
         ],
