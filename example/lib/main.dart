@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -22,9 +23,15 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Animated Navigation Bar"),
+      ),
+      backgroundColor: Color(0xFFE0E0E0),
       body: AnimatedNavBar(
-        padding: 8,
-        color: Theme.of(context).backgroundColor,
+        padding: 0,
+        borderRadius: Radius.circular(0),
+        color: Theme.of(context).cardColor,
+        shadow: false,
         pages: [
           // first page
           AnimatedNavBarPage(
@@ -32,9 +39,9 @@ class MyHomePage extends StatelessWidget {
             icon: Icons.home,
             inactiveIcon: Icons.home_outlined,
             pageContent: Container(
-              color: Colors.redAccent,
+              color: Colors.blue[100],
               alignment: Alignment.center,
-              child: Text("Home"),
+              child: Text("Home", style: TextStyle(fontSize: 24),),
             ),
           ),
           // second page
@@ -43,9 +50,9 @@ class MyHomePage extends StatelessWidget {
             icon: Icons.map,
             inactiveIcon: Icons.map_outlined,
             pageContent: Container(
-              color: Colors.lightBlueAccent,
+              color: Colors.red[100],
               alignment: Alignment.center,
-              child: Text("Map"),
+              child: Text("Map", style: TextStyle(fontSize: 24),),
             ),
           ),
           // third page
@@ -54,9 +61,9 @@ class MyHomePage extends StatelessWidget {
             icon: Icons.person,
             inactiveIcon: Icons.person_outline,
             pageContent: Container(
-              color: Colors.lightGreenAccent,
+              color: Colors.green[100],
               alignment: Alignment.center,
-              child: Text("User"),
+              child: Text("User", style: TextStyle(fontSize: 24),),
             ),
           ),
         ],

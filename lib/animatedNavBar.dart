@@ -160,6 +160,8 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
   }
 }
 
+///
+/// CustomPainter to paint the Tab view background
 class Background extends CustomPainter {
   final int selected;
   final int tabSize;
