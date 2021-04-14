@@ -26,15 +26,16 @@ If you need help getting started with Flutter, head over to the official documen
 
 You can create an `AnimatedNavBar` by calling its constructor and passing a list of `AnimatedNavBarPage` as your `Scaffold` body
 
-<pre><code class="dart">Scaffold(
+```dart
+Scaffold(
   body: AnimatedNavBar(
-    pages: &lt;AnimatedNavBarPage&gt;[
+    pages: <AnimatedNavBarPage>[
       AnimatedNavBarPage(),
       AnimatedNavBarPage(),
       ...
     ]
   ),
-</code></pre>
+```
 
 An `AnimatedNavBar` requires multiple things:
 
@@ -54,7 +55,8 @@ You can style the `AnimatedNavBar` with a variety of additional parameters
 
 here's an example
 
-<pre><code class="dart">Scaffold(
+```dart
+Scaffold(
   backgroundColor: Colors.blue,
   body: AnimatedNavBar(
     borderRadius: Radius.circular(24),
@@ -68,21 +70,21 @@ here's an example
     pages: [
       // first page
       AnimatedNavBarPage(
-        title: &quot;Home&quot;,
+        title: "Home",
         icon: Icons.home,
         inactiveIcon: Icons.home_outlined,
         pageContent: HomePage(),
       ),
       // second page
       AnimatedNavBarPage(
-        title: &quot;Map&quot;,
+        title: "Map",
         icon: Icons.map,
         inactiveIcon: Icons.map_outlined,
         pageContent: MapPage(),
       ),
       // third page
       AnimatedNavBarPage(
-        title: &quot;User&quot;,
+        title: "User",
         icon: Icons.person,
         inactiveIcon: Icons.person_outline,
         pageContent: UserPage(),
@@ -90,7 +92,7 @@ here's an example
     ],
   ),
 );
-</code></pre>
+```
 
 ## Contributions
 
