@@ -10,9 +10,9 @@ class AnimatedNavBar extends StatefulWidget {
   ///
   /// The [defaultPage] default value is 0.
   ///
-  /// The [iconColor] shows how the the selected tab icon's color should appear.
+  /// The [iconColor] how the the selected tab icon's color should appear.
   ///
-  /// The [inactiveIconColor] shows how the the unselected tab icon's color should appear.
+  /// The [inactiveIconColor] how the the unselected tab icon's color should appear.
   ///
   /// The [borderRadius] arguments indicates how the radius around the corners of the [CustomPainter].
   ///
