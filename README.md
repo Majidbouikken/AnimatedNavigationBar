@@ -1,8 +1,12 @@
 # Animated Navigation Bar
 
-A Flutter implementation of an animated navigation bar with animations and customizable parameters.
+A Flutter implementation of a customizable navigation bar with animations.
 
 [![Pub Version](https://img.shields.io/pub/v/animated_navigation_bar?label=pub)](https://pub.dev/packages/animated_navigation_bar)
+[![license](https://img.shields.io/github/license/Majidbouikken/AnimatedNavigationBar)](https://github.com/Majidbouikken/AnimatedNavigationBar/blob/master/LICENSE)
+[![github stars](https://img.shields.io/github/stars/Majidbouikken/AnimatedNavigationBar?style=social)](https://github.com/Majidbouikken/AnimatedNavigationBar/stargazers)
+
+<img src="https://user-images.githubusercontent.com/42124832/114646377-0b817c80-9cd3-11eb-8973-88c117db10f5.gif" width="250"/>
 
 ## Getting started
 
