@@ -10,8 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: ThemeData.dark(
       ),
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
@@ -26,11 +25,12 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Animated Navigation Bar"),
       ),
-      backgroundColor: Color(0xFFE0E0E0),
+      backgroundColor: Colors.redAccent,
       body: AnimatedNavBar(
-        padding: 0,
+        padding: 8,
         borderRadius: Radius.circular(0),
         color: Theme.of(context).cardColor,
+        inactiveColor: Colors.black45,
         shadow: false,
         pages: [
           // first page
@@ -39,7 +39,7 @@ class MyHomePage extends StatelessWidget {
             icon: Icons.home,
             inactiveIcon: Icons.home_outlined,
             pageContent: Container(
-              color: Colors.blue[100],
+              color: Colors.transparent,
               alignment: Alignment.center,
               child: Text(
                 "Home",

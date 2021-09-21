@@ -24,7 +24,7 @@ class AnimatedNavBar extends StatefulWidget {
   /// closest enclosing [DefaultTextStyle].
   final int defaultPage;
   final Color iconColor;
-  final Color inactiveIconColor;
+  final Color inactiveColor;
   final Radius borderRadius;
   final bool shadow;
   final TextStyle textStyle;
@@ -36,7 +36,7 @@ class AnimatedNavBar extends StatefulWidget {
       this.color,
       this.defaultPage = 0,
       this.iconColor,
-      this.inactiveIconColor,
+      this.inactiveColor,
       this.borderRadius,
       this.shadow = true,
       this.textStyle})
@@ -53,6 +53,12 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
   double tabButtonHeight;
   Color icnColor;
 
+  /// style parameters
+  bool wideActiveButton = false;
+
+  /// turn into these parameters
+  int defaultFlex = 1;
+
   @override
   void initState() {
     ///
@@ -66,9 +72,15 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
     size = widget.pages.length;
     selected = this.widget.defaultPage;
     Color color = this.widget.color;
-    tabButtonHeight = 48;
+    tabButtonHeight = 56;
     shadowColor = Color.fromARGB(120, (color.red * 0.2).toInt(),
         (color.green * 0.2).toInt(), (color.blue * 0.2).toInt());
+
+    /// style init state
+    if (wideActiveButton)
+      defaultFlex = 3;
+    else
+      defaultFlex = 1;
     super.initState();
   }
 
@@ -80,9 +92,10 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
           fit: StackFit.expand,
           children: [
             CustomPaint(
-              painter: Background(
+              painter: BackgroundPainter(
                   selected,
                   size,
+                  this.defaultFlex,
                   this.widget.color,
                   shadowColor,
                   this.widget.borderRadius.x,
@@ -94,7 +107,11 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
               children: [
                 // TabView
                 Expanded(
-                  child: this.widget.pages[selected].pageContent,
+                  child: ClipPath(
+                    clipper: BackgroundClipper(selected, size,
+                        this.widget.borderRadius.x, this.tabButtonHeight),
+                    child: this.widget.pages[selected].pageContent,
+                  ),
                 ),
                 // TabButtons
                 Row(
@@ -102,7 +119,7 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                     List<Widget> _list = [];
                     for (int i = 0; i < size; i++) {
                       _list.add(Expanded(
-                          flex: (selected == i) ? 3 : 1,
+                          flex: (selected == i) ? this.defaultFlex : 1,
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
@@ -115,37 +132,91 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                                 height: tabButtonHeight,
                                 alignment: Alignment.center,
                                 child: (selected == i)
-                                    ? Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            this.widget.pages[i].icon,
-                                            color: this.widget.iconColor,
-                                          ),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          Text(
-                                            this.widget.pages[i].title,
-                                            style: this.widget.textStyle,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
+                                    ? (this.wideActiveButton)
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                this.widget.pages[i].icon,
+                                                color: this.widget.iconColor,
+                                              ),
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                this.widget.pages[i].title,
+                                                style: this.widget.textStyle,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              )
+                                            ],
                                           )
-                                        ],
-                                      )
-                                    : Icon(
-                                        (this.widget.pages[i].inactiveIcon !=
-                                                null)
-                                            ? this.widget.pages[i].inactiveIcon
-                                            : this.widget.pages[i].icon,
-                                        color: (this.widget.inactiveIconColor !=
-                                                null)
-                                            ? this.widget.inactiveIconColor
-                                            : this.widget.iconColor,
-                                      ),
+                                        : Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                                Icon(
+                                                  this.widget.pages[i].icon,
+                                                  color: this.widget.iconColor,
+                                                ),
+                                                Text(
+                                                  this.widget.pages[i].title,
+                                                  style: this.widget.textStyle,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                )
+                                              ])
+                                    : (this.wideActiveButton)
+                                        ? Icon(
+                                            (this
+                                                        .widget
+                                                        .pages[i]
+                                                        .inactiveIcon !=
+                                                    null)
+                                                ? this
+                                                    .widget
+                                                    .pages[i]
+                                                    .inactiveIcon
+                                                : this.widget.pages[i].icon,
+                                            color: (this.widget.inactiveColor !=
+                                                    null)
+                                                ? this.widget.inactiveColor
+                                                : this.widget.iconColor,
+                                          )
+                                        : Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                this.widget.pages[i].icon,
+                                                color: (this
+                                                            .widget
+                                                            .inactiveColor !=
+                                                        null)
+                                                    ? this.widget.inactiveColor
+                                                    : this.widget.iconColor,
+                                              ),
+                                              Text(
+                                                this.widget.pages[i].title,
+                                                style: (this
+                                                            .widget
+                                                            .inactiveColor !=
+                                                        null)
+                                                    ? TextStyle(color: this.widget.inactiveColor)
+                                                    : this.widget.textStyle,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              )
+                                            ],
+                                          ),
                               ),
                             ),
                           )));
@@ -161,30 +232,92 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
 }
 
 ///
-/// CustomPainter to paint the Tab view background
-class Background extends CustomPainter {
+/// CustomClipper to clip the Tab view page
+class BackgroundClipper extends CustomClipper<Path> {
+  /// [selected] and [tabSize] are to know how to clip the background on the corners
   final int selected;
   final int tabSize;
+
+  /// [radius] is the border radius value
+  final double radius;
+
+  /// to get the bottom margin
+  final double tabButtonHeight;
+
+  BackgroundClipper(
+      this.selected, this.tabSize, this.radius, this.tabButtonHeight);
+
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+
+    /// starting point : right side
+    path.moveTo(size.width, radius);
+
+    /// top right corner
+    path.quadraticBezierTo(size.width, 0, size.width - radius, 0);
+
+    /// top line
+    path.lineTo(radius, 0);
+
+    /// top left corner
+    path.quadraticBezierTo(0, 0, 0, radius);
+
+    /// bottom left corner
+    /// if selected item is the first one
+    if (selected == 0) {
+      path.lineTo(0, size.height);
+      path.lineTo(size.width - radius, size.height);
+      path.quadraticBezierTo(
+          size.width, size.height, size.width, size.height - radius);
+    } else if (selected == tabSize - 1) {
+      path.lineTo(0, size.height - radius);
+      path.quadraticBezierTo(0, size.height, radius, size.height);
+      path.lineTo(size.width, size.height);
+    } else {
+      path.lineTo(0, size.height - radius);
+      path.quadraticBezierTo(0, size.height, radius, size.height);
+      path.lineTo(size.width - radius, size.height);
+      path.quadraticBezierTo(
+          size.width, size.height, size.width, size.height - radius);
+    }
+
+    path.lineTo(size.width, radius);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
+
+///
+/// CustomPainter to paint the Tab view background
+class BackgroundPainter extends CustomPainter {
+  final int selected;
+  final int tabSize;
+  final int defaultFlex;
   final Color color;
   final Color shadowColor;
   final double radius;
   final double tabButtonHeight;
   final bool shadow;
 
-  Background(this.selected, this.tabSize, this.color, this.shadowColor,
-      this.radius, this.tabButtonHeight, this.shadow);
+  BackgroundPainter(this.selected, this.tabSize, this.defaultFlex, this.color,
+      this.shadowColor, this.radius, this.tabButtonHeight, this.shadow);
 
   @override
   void paint(Canvas canvas, Size size) {
-    var flexSize = size.width / (tabSize - 1 + 3);
-    var activeTabWidth = flexSize * 3;
-    var paint = Paint();
+    double flexSize = size.width / (tabSize - 1 + this.defaultFlex);
+    double activeTabWidth = flexSize * this.defaultFlex;
+    Paint paint = Paint();
     paint.color = this.color;
     paint.style = PaintingStyle.fill; // Change this to fill
 
-    var path = Path();
+    Path path = Path();
 
-    /// starting point (right side)
+    /// starting point : right side
     path.moveTo(size.width, radius);
 
     /// top right corner
