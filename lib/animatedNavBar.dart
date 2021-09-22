@@ -23,6 +23,7 @@ class AnimatedNavBar extends StatefulWidget {
   /// If the [textStyle] argument is null, the AnimatedNavBar will use the style from the
   /// closest enclosing [DefaultTextStyle].
   final int defaultPage;
+  final bool activeButtonIsWide;
   final Color iconColor;
   final Color inactiveColor;
   final Radius borderRadius;
@@ -35,6 +36,7 @@ class AnimatedNavBar extends StatefulWidget {
       this.padding = 8,
       this.color,
       this.defaultPage = 0,
+        this.activeButtonIsWide = false,
       this.iconColor,
       this.inactiveColor,
       this.borderRadius,
@@ -52,9 +54,6 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
   Color shadowColor;
   double tabButtonHeight;
   Color icnColor;
-
-  /// style parameters
-  bool wideActiveButton = false;
 
   /// turn into these parameters
   int defaultFlex = 1;
@@ -77,7 +76,7 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
         (color.green * 0.2).toInt(), (color.blue * 0.2).toInt());
 
     /// style init state
-    if (wideActiveButton)
+    if (widget.activeButtonIsWide)
       defaultFlex = 3;
     else
       defaultFlex = 1;
@@ -132,7 +131,7 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                                 height: tabButtonHeight,
                                 alignment: Alignment.center,
                                 child: (selected == i)
-                                    ? (this.wideActiveButton)
+                                    ? (this.widget.activeButtonIsWide)
                                         ? Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -172,7 +171,7 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                                                       TextOverflow.ellipsis,
                                                 )
                                               ])
-                                    : (this.wideActiveButton)
+                                    : (this.widget.activeButtonIsWide)
                                         ? Icon(
                                             (this
                                                         .widget
