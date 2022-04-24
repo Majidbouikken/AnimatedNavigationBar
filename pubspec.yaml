@@ -5,7 +5,7 @@ author: Abdelmadjid Bouikken Bahi Amar <bouikkenmajid@gmail.com>
 homepage: https://github.com/Majidbouikken/AnimatedNavigationBar
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
@@ -15,5 +15,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
 
 flutter:

@@ -5,7 +5,7 @@ class TabNavigatorRoutes {
 }
 
 class TabNavigator extends StatelessWidget {
-  TabNavigator({@required this.rootPage, @required this.navigatorKey});
+  TabNavigator({required this.rootPage, required this.navigatorKey});
 
   final GlobalKey<NavigatorState> navigatorKey;
   final Widget rootPage;
@@ -25,7 +25,7 @@ class TabNavigator extends StatelessWidget {
         initialRoute: TabNavigatorRoutes.root,
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
-              builder: (context) => routeBuilders[routeSettings.name](context));
+              builder: (context) => routeBuilders[routeSettings.name!]!(context));
         });
   }
 }

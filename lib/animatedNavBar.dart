@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 class AnimatedNavBar extends StatefulWidget {
   ///
   /// The [pages] [color] and [borderRadius] parameters must not be null.
-  final List<AnimatedNavBarPage> pages;
+  final List<AnimatedNavBarPage>? pages;
   final double padding;
-  final Color color;
+  final Color? color;
 
   ///
   /// The [defaultPage] default value is 0.
@@ -24,16 +24,16 @@ class AnimatedNavBar extends StatefulWidget {
   /// If the [textStyle] argument is null, the AnimatedNavBar will use the style from the
   /// closest enclosing [DefaultTextStyle].
   final int defaultPage;
-  final ValueChanged<int> selectedPage;
+  final ValueChanged<int?>? selectedPage;
   final bool activeButtonIsWide;
-  final Color iconColor;
-  final Color inactiveColor;
-  final Radius borderRadius;
+  final Color? iconColor;
+  final Color? inactiveColor;
+  final Radius? borderRadius;
   final bool shadow;
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   const AnimatedNavBar(
-      {Key key,
+      {Key? key,
       this.pages,
       this.padding = 8,
       this.color,
@@ -52,11 +52,11 @@ class AnimatedNavBar extends StatefulWidget {
 }
 
 class _AnimatedNavBarState extends State<AnimatedNavBar> {
-  int size;
-  int selected;
-  Color shadowColor;
-  double tabButtonHeight;
-  Color icnColor;
+  int? size;
+  int? selected;
+  Color? shadowColor;
+  double? tabButtonHeight;
+  Color? icnColor;
 
   /// turn into these parameters
   int defaultFlex = 1;
@@ -68,11 +68,11 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
     /// for more on bottom navigation bars head over to https://material.io/components/bottom-navigation#usage
     ///
     /// if you want to implement more than 5 destinations than a navigation drawer would suffice.
-    if (!(widget.pages.length > 0 && widget.pages.length < 6))
+    if (!(widget.pages!.length > 0 && widget.pages!.length < 6))
       throw ("Total count of tabs must not exceed 5 or recede 1");
-    size = widget.pages.length;
+    size = widget.pages!.length;
     selected = widget.defaultPage;
-    Color color = widget.color;
+    Color color = widget.color!;
     tabButtonHeight = 56;
     shadowColor = Color.fromARGB(120, (color.red * 0.2).toInt(),
         (color.green * 0.2).toInt(), (color.blue * 0.2).toInt());
@@ -98,7 +98,7 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                   defaultFlex,
                   widget.color,
                   shadowColor,
-                  widget.borderRadius.x,
+                  widget.borderRadius!.x,
                   tabButtonHeight,
                   widget.shadow)),
           Column(mainAxisSize: MainAxisSize.max, children: [
@@ -109,19 +109,19 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                         (Directionality.of(context) == TextDirection.rtl),
                         selected,
                         size,
-                        widget.borderRadius.x,
+                        widget.borderRadius!.x,
                         tabButtonHeight),
                     child: Stack(
                         fit: StackFit.expand,
                         children: (() {
                           List<Widget> _list = [];
-                          for (int i = 0; i < widget.pages.length; i++) {
+                          for (int i = 0; i < widget.pages!.length; i++) {
                             _list.add(Offstage(
                                 offstage: selected != i,
                                 child: TabNavigator(
-                                    rootPage: widget.pages[i].pageContent,
+                                    rootPage: widget.pages![i].pageContent,
                                     navigatorKey:
-                                        widget.pages[i].navigationKey)));
+                                        widget.pages![i].navigationKey)));
                           }
                           return _list;
                         }())))),
@@ -129,7 +129,7 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
             Row(
                 children: (() {
               List<Widget> _list = [];
-              for (int i = 0; i < size; i++) {
+              for (int i = 0; i < size!; i++) {
                 _list.add(Expanded(
                     flex: (selected == i) ? this.defaultFlex : 1,
                     child: Material(
@@ -137,7 +137,7 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                         child: InkWell(
                             onTap: (selected == i)
                                 ? () => setState(() => widget
-                                    .pages[i].navigationKey.currentState
+                                    .pages![i].navigationKey.currentState!
                                     .popUntil((route) => route.isFirst))
                                 : () => setState(() {
                                       selected = i;
@@ -154,12 +154,12 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                                Icon(widget.pages[i].icon,
+                                                Icon(widget.pages![i].icon,
                                                     color: widget.iconColor),
                                                 SizedBox(
                                                   width: 8,
                                                 ),
-                                                Text(widget.pages[i].title,
+                                                Text(widget.pages![i].title,
                                                     style: widget.textStyle,
                                                     maxLines: 1,
                                                     overflow:
@@ -171,9 +171,9 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                                Icon(widget.pages[i].icon,
+                                                Icon(widget.pages![i].icon,
                                                     color: widget.iconColor),
-                                                Text(widget.pages[i].title,
+                                                Text(widget.pages![i].title,
                                                     style: widget.textStyle,
                                                     maxLines: 1,
                                                     overflow:
@@ -181,10 +181,10 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                                               ])
                                     : (widget.activeButtonIsWide)
                                         ? Icon(
-                                            (widget.pages[i].inactiveIcon !=
+                                            (widget.pages![i].inactiveIcon !=
                                                     null)
-                                                ? widget.pages[i].inactiveIcon
-                                                : widget.pages[i].icon,
+                                                ? widget.pages![i].inactiveIcon
+                                                : widget.pages![i].icon,
                                             color:
                                                 (widget.inactiveColor != null)
                                                     ? widget.inactiveColor
@@ -197,14 +197,14 @@ class _AnimatedNavBarState extends State<AnimatedNavBar> {
                                                 MainAxisAlignment.center,
                                             children: [
                                                 Icon(
-                                                  widget.pages[i].icon,
+                                                  widget.pages![i].icon,
                                                   color:
                                                       (widget.inactiveColor !=
                                                               null)
                                                           ? widget.inactiveColor
                                                           : widget.iconColor,
                                                 ),
-                                                Text(this.widget.pages[i].title,
+                                                Text(this.widget.pages![i].title,
                                                     style: (widget
                                                                 .inactiveColor !=
                                                             null)
@@ -233,14 +233,14 @@ class BackgroundClipper extends CustomClipper<Path> {
   final bool isRtl;
 
   /// [selected] and [tabSize] are to know how to clip the background on the corners
-  final int selected;
-  final int tabSize;
+  final int? selected;
+  final int? tabSize;
 
   /// [radius] is the border radius value
   final double radius;
 
   /// to get the bottom margin
-  final double tabButtonHeight;
+  final double? tabButtonHeight;
 
   BackgroundClipper(this.isRtl, this.selected, this.tabSize, this.radius,
       this.tabButtonHeight);
@@ -275,7 +275,7 @@ class BackgroundClipper extends CustomClipper<Path> {
       path.lineTo(extremeRight + directionalitySign * radius, size.height);
       path.quadraticBezierTo(
           extremeRight, size.height, extremeRight, size.height - radius);
-    } else if (selected == tabSize - 1) {
+    } else if (selected == tabSize! - 1) {
       path.lineTo(extremeLeft, size.height - radius);
       path.quadraticBezierTo(extremeLeft, size.height,
           extremeLeft - directionalitySign * radius, size.height);
@@ -307,15 +307,15 @@ class BackgroundPainter extends CustomPainter {
   final bool isRtl;
 
   /// [selected] and [tabSize] are to know how to clip the background on the corners
-  final int selected;
-  final int tabSize;
+  final int? selected;
+  final int? tabSize;
   final int defaultFlex;
-  final Color color;
-  final Color shadowColor;
+  final Color? color;
+  final Color? shadowColor;
 
   /// [radius] is the border radius value
   final double radius;
-  final double tabButtonHeight;
+  final double? tabButtonHeight;
   final bool shadow;
 
   BackgroundPainter(
@@ -331,10 +331,10 @@ class BackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double flexSize = size.width / (tabSize - 1 + this.defaultFlex);
+    double flexSize = size.width / (tabSize! - 1 + this.defaultFlex);
     double activeTabWidth = flexSize * this.defaultFlex;
     Paint paint = Paint();
-    paint.color = this.color;
+    paint.color = this.color!;
     paint.style = PaintingStyle.fill; // Change this to fill
 
     Path path = Path();
@@ -360,28 +360,28 @@ class BackgroundPainter extends CustomPainter {
 
     /// bottom left corner
     if (selected == 0)
-      path.lineTo(extremeLeft, size.height - tabButtonHeight);
+      path.lineTo(extremeLeft, size.height - tabButtonHeight!);
     else {
-      path.lineTo(extremeLeft, size.height - tabButtonHeight - radius);
+      path.lineTo(extremeLeft, size.height - tabButtonHeight! - radius);
       path.quadraticBezierTo(
           extremeLeft,
-          size.height - tabButtonHeight,
+          size.height - tabButtonHeight!,
           extremeLeft - directionalitySign * radius,
-          size.height - tabButtonHeight);
+          size.height - tabButtonHeight!);
     }
 
     /// tab buttons
-    for (int i = 0; i < tabSize; i++) {
+    for (int i = 0; i < tabSize!; i++) {
       /// if painter is before selected item
-      if (i == selected - 1) {
+      if (i == selected! - 1) {
         path.lineTo(
             extremeLeft - directionalitySign * (flexSize * (i + 1) - radius),
-            size.height - tabButtonHeight);
+            size.height - tabButtonHeight!);
         path.quadraticBezierTo(
             extremeLeft - directionalitySign * (flexSize * (i + 1)),
-            size.height - tabButtonHeight,
+            size.height - tabButtonHeight!,
             extremeLeft - directionalitySign * (flexSize * (i + 1)),
-            size.height - tabButtonHeight + radius);
+            size.height - tabButtonHeight! + radius);
       }
 
       /// if painter is on selected item
@@ -405,35 +405,35 @@ class BackgroundPainter extends CustomPainter {
       }
 
       /// if painter is after selected item
-      if (i == selected + 1) {
+      if (i == selected! + 1) {
         path.lineTo(
             extremeLeft -
                 directionalitySign * (flexSize * (i - 1) + activeTabWidth),
-            size.height - tabButtonHeight + radius);
+            size.height - tabButtonHeight! + radius);
         path.quadraticBezierTo(
             extremeLeft -
                 directionalitySign * (flexSize * (i - 1) + activeTabWidth),
-            size.height - tabButtonHeight,
+            size.height - tabButtonHeight!,
             extremeLeft -
                 directionalitySign *
                     (flexSize * (i - 1) + activeTabWidth + radius),
-            size.height - tabButtonHeight);
+            size.height - tabButtonHeight!);
       }
     }
 
     /// bottom right corner
-    if (selected == tabSize - 1)
+    if (selected == tabSize! - 1)
       path.lineTo(extremeRight, radius);
     else {
       path.lineTo(extremeRight + directionalitySign * radius,
-          size.height - tabButtonHeight);
-      path.quadraticBezierTo(extremeRight, size.height - tabButtonHeight,
-          extremeRight, size.height - tabButtonHeight - radius);
+          size.height - tabButtonHeight!);
+      path.quadraticBezierTo(extremeRight, size.height - tabButtonHeight!,
+          extremeRight, size.height - tabButtonHeight! - radius);
       path.lineTo(extremeRight, radius);
     }
 
     /// drawing the canvas
-    if (this.shadow) canvas.drawShadow(path, this.shadowColor, 4.0, true);
+    if (this.shadow) canvas.drawShadow(path, this.shadowColor!, 4.0, true);
     canvas.drawPath(path, paint);
   }
 
@@ -451,15 +451,15 @@ class AnimatedNavBarPage {
   /// The [inactiveIcon] property's replaced by the [icon] argument when null.
   final String title;
   final Widget pageContent;
-  final IconData icon;
-  final IconData inactiveIcon;
+  final IconData? icon;
+  final IconData? inactiveIcon;
   final GlobalKey<NavigatorState> navigationKey;
 
   const AnimatedNavBarPage(
-      {Key key,
-      @required this.title,
-      @required this.pageContent,
-      @required this.navigationKey,
+      {Key? key,
+      required this.title,
+      required this.pageContent,
+      required this.navigationKey,
       this.icon,
       this.inactiveIcon});
 }
